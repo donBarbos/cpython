@@ -1440,8 +1440,7 @@ new_timezone(PyObject *offset, PyObject *name)
         GET_TD_DAYS(offset) < -1 || GET_TD_DAYS(offset) >= 1) {
         PyErr_Format(PyExc_ValueError, "offset must be a timedelta"
                      " strictly between -timedelta(hours=24) and"
-                     " timedelta(hours=24),"
-                     " not %R", offset);
+                     " timedelta(hours=24)");
         return NULL;
     }
 
@@ -1513,8 +1512,7 @@ call_tzinfo_method(PyObject *tzinfo, const char *name, PyObject *tzinfoarg)
             Py_DECREF(offset);
             PyErr_Format(PyExc_ValueError, "offset must be a timedelta"
                          " strictly between -timedelta(hours=24) and"
-                         " timedelta(hours=24),"
-                         " not %R", offset);
+                         " timedelta(hours=24)");
             return NULL;
         }
     }

@@ -563,7 +563,7 @@ def _check_utc_offset(name, offset):
     if not -timedelta(1) < offset < timedelta(1):
         raise ValueError("offset must be a timedelta "
                          "strictly between -timedelta(hours=24) and "
-                         f"timedelta(hours=24), not {offset.__repr__()}")
+                         "timedelta(hours=24)")
 
 def _check_date_fields(year, month, day):
     year = _index(year)
@@ -2419,7 +2419,7 @@ class timezone(tzinfo):
         if not cls._minoffset <= offset <= cls._maxoffset:
             raise ValueError("offset must be a timedelta "
                              "strictly between -timedelta(hours=24) and "
-                             f"timedelta(hours=24), not {offset.__repr__()}")
+                             "timedelta(hours=24)")
         return cls._create(offset, name)
 
     def __init_subclass__(cls):
