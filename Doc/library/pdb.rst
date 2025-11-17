@@ -334,7 +334,7 @@ access further features, you have to do this yourself:
 
 .. _debugger-commands:
 
-Debugger Commands
+Debugger commands
 -----------------
 
 The commands recognized by the debugger are listed below.  Most commands can be
