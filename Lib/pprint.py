@@ -232,6 +232,13 @@ class PrettyPrinter:
             return indent
         return indent + prefix_len
 
+    def _write_indent_padding(self, write):
+        if self._expand:
+            if self._indent_per_level > 0:
+                write(self._indent_per_level * " ")
+        elif self._indent_per_level > 1:
+            write((self._indent_per_level - 1) * " ")
+
     def _pprint_dataclass(self, object, stream, indent, allowance, context, level):
         # Lazy import to improve module import time
         from dataclasses import fields as dataclass_fields
@@ -251,10 +258,7 @@ class PrettyPrinter:
     def _pprint_dict(self, object, stream, indent, allowance, context, level):
         write = stream.write
         write(self._format_block_start('{', indent))
-        if self._indent_per_level > 1 and not self._expand:
-            write((self._indent_per_level - 1) * ' ')
-        if self._indent_per_level > 0 and self._expand:
-            write(self._indent_per_level * ' ')
+        self._write_indent_padding(write)
         length = len(object)
         if length:
             if self._sort_dicts:
@@ -554,10 +558,7 @@ class PrettyPrinter:
     def _format_items(self, items, stream, indent, allowance, context, level):
         write = stream.write
         indent += self._indent_per_level
-        if self._indent_per_level > 1 and not self._expand:
-            write((self._indent_per_level - 1) * ' ')
-        if self._indent_per_level > 0 and self._expand:
-            write(self._indent_per_level * ' ')
+        self._write_indent_padding(write)
         delimnl = ',\n' + ' ' * indent
         delim = ''
         width = max_width = self._width - indent + 1
@@ -633,10 +634,7 @@ class PrettyPrinter:
             return
         cls = object.__class__
         stream.write(self._format_block_start(cls.__name__ + '({', indent))
-        if self._indent_per_level > 1 and not self._expand:
-            stream.write((self._indent_per_level - 1) * ' ')
-        if self._indent_per_level > 0 and self._expand:
-            stream.write(self._indent_per_level * ' ')
+        self._write_indent_padding(stream.write)
         items = object.most_common()
         self._format_dict_items(
             items,
